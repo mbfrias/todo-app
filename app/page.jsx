@@ -85,7 +85,7 @@ export default function Home() {
     
         <footer className="flex flex-col items-center justify-center mt-10">
             <p className="text-xl">
-                made with <span className="text-red-500">❤</span> by <a href="https://www.marrtin.com">MAЯTÍN</a>
+                made with <span className="text-red-500">❤</span> by <a className="underline hover:no-underline" href="https://www.marrtin.com">MAЯTÍN</a>
             </p>
         </footer>
         </>
