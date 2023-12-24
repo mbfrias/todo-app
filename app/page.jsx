@@ -8,9 +8,12 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faCheck } from "@fortawesome/free-solid-svg-icons";
 
 export default function Home() {
+
+    let itemId;
+    let item;
     const savedTodos = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem("todos")) || [] : [];
     const [todos, setTodos] = useState(savedTodos);
     const [todo, setTodo] = useState("");
@@ -71,10 +74,17 @@ export default function Home() {
                 typeof window !== 'undefined' && window.localStorage.getItem("todos") !== null && JSON.parse(window.localStorage.getItem("todos")).map((todo) => (
                 <div
                     key={todo.id}
+                    id={todo.id}
                     className="border-2 border-gray-400 rounded-md p-2 mt-2 flex items-center justify-between"
                 >
+                    <input type="checkbox" className="mr-2" onClick={() => (
+                        itemId = todo.id,
+                        item = document.getElementById(itemId),
+                        item.classList.toggle("line-through"),
+                        item.getElementsByClassName("buttonIdentifier")[0].classList.toggle("hidden"),
+                    )} />
                     <p>{todo.text}</p>
-                    <button onClick={() => deleteTodo(todo.id)} className="p-1 hover:text-red-600 transition-all duration-400">
+                    <button id={`button-${todo.id}`} onClick={() => deleteTodo(todo.id)} className="buttonIdentifier p-1 py-0 hover:text-red-600 transition-all duration-400 hidden">
                         <FontAwesomeIcon icon={faTrash} />
                     </button>
                 </div>
