@@ -81,7 +81,7 @@ export default function Home() {
                         itemId = todo.id,
                         item = document.getElementById(itemId),
                         item.classList.toggle("line-through"),
-                        item.getElementsByClassName("buttonIdentifier")[0].classList.toggle("hidden"),
+                        item.getElementsByClassName("buttonIdentifier")[0].classList.toggle("hidden")
                     )} />
                     <p>{todo.text}</p>
                     <button id={`button-${todo.id}`} onClick={() => deleteTodo(todo.id)} className="buttonIdentifier p-1 py-0 hover:text-red-600 transition-all duration-400 hidden">
