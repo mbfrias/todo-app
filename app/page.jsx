@@ -5,15 +5,20 @@ import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 // import styles from "../styles/Home.module.css"; // not using this, tailwind better
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 export default function Home() {
-    const savedTodos = JSON.parse(localStorage.getItem("todos"));
+    const savedTodos = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem("todos")) || [] : [];
     const [todos, setTodos] = useState(savedTodos);
     const [todo, setTodo] = useState("");
+
+    useEffect(() => {
+        const savedTodos = JSON.parse(localStorage.getItem("todos")) || [];
+        setTodos(savedTodos);
+    }, []);
 
     const addTodo = () => {
         if (!todo) return alert("cannot be empty");
@@ -34,13 +39,13 @@ export default function Home() {
     };
     
     return (
-        <div className="container mx-auto">
+        <>
         <Head>
             <title>To-Do List</title>
             <link rel="icon" href="/favicon.ico" />
         </Head>
     
-        <main className="flex flex-col items-center justify-center mt-10">
+        <main className="flex flex-col items-center justify-center mt-10" suppressHydrationWarning>
             <h1 className="text-4xl font-bold">To-Do List</h1>
     
             <div className="flex flex-col items-center justify-center mt-10">
@@ -63,7 +68,7 @@ export default function Home() {
             <div className="flex flex-col items-center justify-center mt-10">
             {
                 /* get todos from local storage */
-                localStorage.getItem("todos") !== null && JSON.parse(localStorage.getItem("todos")).map((todo) => (
+                typeof window !== 'undefined' && window.localStorage.getItem("todos") !== null && JSON.parse(window.localStorage.getItem("todos")).map((todo) => (
                 <div
                     key={todo.id}
                     className="border-2 border-gray-400 rounded-md p-2 mt-2 flex items-center justify-between"
@@ -83,7 +88,7 @@ export default function Home() {
                 made with <span className="text-red-500">❤</span> by <a href="https://www.marrtin.com">MAЯTÍN</a>
             </p>
         </footer>
-        </div>
+        </>
     );
 }
 
